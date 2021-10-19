@@ -24,7 +24,8 @@ body {
 
 .navbar {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
+  z-index: 99999999;
   list-style: none;
   text-transform: uppercase;
   font-size: large;
@@ -38,7 +39,7 @@ body {
 
 .scrollArea {
   position: absolute;
-  top: 0;
+  top: 50px;
   left: 0;
   width: 100vw;
   height: 100vh;
@@ -90,7 +91,6 @@ header {
             text-transform: capitalize;
             text-decoration: none;
             color: white;
-            outline: 1px solid #fff;
             padding: 10px 15px;
             border-radius: 10px;
           }
@@ -106,34 +106,4 @@ header {
   width: 100%;
   margin: 0 auto;
   color: #fff;
-  span {
-    display: block;
-  }
-  @media (max-width: 1440px) {
-    font-size: 6rem;
-  }
-}
-
-.loading {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 100%;
-  height: 100%;
-  background: #171717;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-
-.loading-bar-container {
-  width: 100px;
-  height: 32px;
-  background: #272727;
-}
-
-.loading-bar {
-  height: 32px;
-  background: #f15946;
 }

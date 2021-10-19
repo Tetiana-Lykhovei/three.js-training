@@ -11,8 +11,8 @@ export const Navbar = () => {
               className="navbar-title"
               to="/boxes"
               activeStyle={{
-                backgroundColor: "teal",
                 padding: "10px",
+                border: "1px solid white",
                 borderRadius: "8px",
               }}
             >
@@ -24,12 +24,25 @@ export const Navbar = () => {
               className="navbar-title"
               to="/chairs"
               activeStyle={{
-                backgroundColor: "teal",
                 padding: "10px",
+                border: "1px solid white",
                 borderRadius: "8px",
               }}
             >
               Chairs
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              className="navbar-title"
+              to="/some"
+              activeStyle={{
+                padding: "10px",
+                border: "1px solid white",
+                borderRadius: "8px",
+              }}
+            >
+              Some
             </NavLink>
           </li>
         </ul>
