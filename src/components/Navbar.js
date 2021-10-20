@@ -35,14 +35,14 @@ export const Navbar = () => {
           <li>
             <NavLink
               className="navbar-title"
-              to="/some"
+              to="/shoes"
               activeStyle={{
                 padding: "10px",
                 border: "1px solid white",
                 borderRadius: "8px",
               }}
             >
-              Some
+              Shoe
             </NavLink>
           </li>
         </ul>

@@ -1,10 +1,11 @@
-import React, { Suspense, useRef, useEffect } from "react";
+import React, { Suspense, useRef, useEffect, useState } from "react";
 import Header from "../components/header";
 import { Section } from "../components/section";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { Html, useGLTF } from "@react-three/drei";
 import state from "../components/state";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { Html, useGLTF, useProgress } from "@react-three/drei";
 import { useInView } from "react-intersection-observer";
+import { a, useTransition } from "@react-spring/web";
 
 const Model = ({ url }) => {
   const gltf = useGLTF(url, true);
@@ -15,17 +16,28 @@ const Lights = () => {
   return (
     <>
       <ambientLight intensity={0.3} />
-      <directionalLight positopn={[10, 10, 5]} intensity={1} />
-      <directionalLight positopn={[0, 10, 0]} intensity={1.5} />
-      <spotLight positon={[1000, 0, 0]} intensity={1} />
+      <directionalLight position={[10, 10, 5]} intensity={1} />
+      <directionalLight
+        castShadow
+        position={[0, 10, 0]}
+        intensity={1.5}
+        shadow-mapSize-width={1024}
+        shadow-mapSize-height={1024}
+        shadow-camera-far={50}
+        shadow-camera-left={-10}
+        shadow-camera-right={10}
+        shadow-camera-top={10}
+        shadow-camera-bottom={-10}
+      />
+      <spotLight positon={[1000, 0, 0]} intensity={1} castShadow />
     </>
   );
 };
 
 const HtmlContent = ({
-  bgColor,
   domContent,
   children,
+  bgColor,
   modelPath,
   positionY,
 }) => {
@@ -53,7 +65,27 @@ const HtmlContent = ({
   );
 };
 
+function Loader() {
+  const { active, progress } = useProgress();
+  const transition = useTransition(active, {
+    from: { opacity: 1, progress: 0 },
+    leave: { opacity: 0 },
+    update: { progress },
+  });
+  return transition(
+    ({ progress, opacity }, active) =>
+      active && (
+        <a.div className="loading" style={{ opacity }}>
+          <div className="loading-bar-container">
+            <a.div className="loading-bar" style={{ width: progress }}></a.div>
+          </div>
+        </a.div>
+      )
+  );
+}
+
 export function Chairs() {
+  const [events, setEvents] = useState();
   const domContent = useRef();
   const scrollArea = useRef();
   const onScroll = (e) => (state.top.current = e.target.scrollTop);
@@ -63,11 +95,12 @@ export function Chairs() {
   return (
     <>
       <Header />
+
       <Canvas
         style={{
           width: "1024px",
           height: "800px",
-          marginLeft: "23%",
+          marginLeft: "35%",
         }}
         concurrent
         colorManagement
@@ -81,7 +114,7 @@ export function Chairs() {
             positionY={250}
             bgColor="#f15946"
           >
-            <h3 className="title">Yellow</h3>
+            <h3 className="title"> Enjoy the warmth of Yellow</h3>
           </HtmlContent>
           <HtmlContent
             domContent={domContent}
@@ -89,7 +122,7 @@ export function Chairs() {
             positionY={0}
             bgColor="#327567"
           >
-            <h3 className="title">Green</h3>
+            <h3 className="title">Feel freedom with Green</h3>
           </HtmlContent>
           <HtmlContent
             domContent={domContent}
@@ -97,11 +130,19 @@ export function Chairs() {
             positionY={-250}
             bgColor="#636567"
           >
-            <h3 className="title">Gray</h3>
+            <h3 className="title">
+              Stay focused <br /> in Gray
+            </h3>
           </HtmlContent>
         </Suspense>
       </Canvas>
-      <div className="scrollArea" ref={scrollArea} onScroll={onScroll}>
+      <Loader />
+      <div
+        className="scrollArea"
+        ref={scrollArea}
+        onScroll={onScroll}
+        {...events}
+      >
         <div style={{ position: "sticky", top: 0 }} ref={domContent}></div>
         <div style={{ height: `${state.sections * 100}vh` }}> </div>
       </div>

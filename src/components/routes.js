@@ -2,7 +2,7 @@ import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { Boxes } from "../pages/Boxes";
 import { Chairs } from "../pages/Chairs";
-import { Some } from "../pages/Some";
+import { FloatingShoe } from "../pages/Shoes";
 
 export const useRoutes = () => {
   return (
@@ -13,8 +13,8 @@ export const useRoutes = () => {
       <Route path="/chairs" exact>
         <Chairs />
       </Route>
-      <Route path="/some" exact>
-        <Some />
+      <Route path="/shoes" exact>
+        <FloatingShoe />
       </Route>
       <Redirect to="/boxes" />
     </Switch>

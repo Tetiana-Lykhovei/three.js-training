@@ -6,6 +6,7 @@ import {
   OrbitControls,
 } from "@react-three/drei";
 import { useSpring, a } from "@react-spring/three";
+import { HexColorPicker } from "react-colorful";
 
 softShadows();
 
